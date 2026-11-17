@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: APIGateway_Proj
+
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - RewritePath=/accounts/?(?<segment>.*), /api/v1/internal/accounts/${segment}
